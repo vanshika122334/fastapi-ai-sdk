@@ -7,16 +7,13 @@ compatible with the Vercel AI SDK frontend.
 
 import asyncio
 import uuid
-from contextlib import asynccontextmanager
+from collections.abc import AsyncGenerator, AsyncIterator
 from typing import (
     Any,
-    AsyncGenerator,
-    AsyncIterator,
     Callable,
     Dict,
     List,
     Optional,
-    Union,
 )
 
 from .models import (
@@ -80,7 +77,7 @@ class AIStream:
                 self._closed = True
         except Exception as e:
             # Send error event if an exception occurs
-            yield ErrorEvent(error_text=str(e)).to_sse()
+            yield ErrorEvent(errorText=str(e)).to_sse()
             if self._auto_close:
                 yield "data: [DONE]\n\n"
             raise
@@ -99,7 +96,7 @@ class AIStream:
             A new AIStream with the transformation applied
         """
 
-        async def transformed_generator():
+        async def transformed_generator() -> AsyncGenerator[AnyStreamEvent, None]:
             async for event in self._generator:
                 transformed = transform(event)
                 if transformed is not None:
@@ -121,7 +118,7 @@ class AIStream:
             A new AIStream with the filter applied
         """
 
-        async def filtered_generator():
+        async def filtered_generator() -> AsyncGenerator[AnyStreamEvent, None]:
             async for event in self._generator:
                 if predicate(event):
                     yield event
@@ -165,7 +162,7 @@ class AIStreamBuilder:
         if self._started:
             raise RuntimeError("Stream has already been started")
 
-        self._events.append(StartEvent(message_id=self._message_id))
+        self._events.append(StartEvent(messageId=self._message_id))
         self._started = True
         return self
 
@@ -331,7 +328,7 @@ class AIStreamBuilder:
 
         # Start tool input
         self._events.append(
-            ToolInputStartEvent(tool_call_id=tool_call_id, tool_name=tool_name)
+            ToolInputStartEvent(toolCallId=tool_call_id, toolName=tool_name)
         )
 
         # Stream or provide input
@@ -341,16 +338,14 @@ class AIStreamBuilder:
             input_str = json.dumps(input_data)
             for char in input_str:
                 self._events.append(
-                    ToolInputDeltaEvent(
-                        tool_call_id=tool_call_id, input_text_delta=char
-                    )
+                    ToolInputDeltaEvent(toolCallId=tool_call_id, inputTextDelta=char)
                 )
 
         # Make input available
         self._events.append(
             ToolInputAvailableEvent(
-                tool_call_id=tool_call_id,
-                tool_name=tool_name,
+                toolCallId=tool_call_id,
+                toolName=tool_name,
                 input=input_data,
             )
         )
@@ -358,7 +353,7 @@ class AIStreamBuilder:
         # Add output if available
         if output_data is not None:
             self._events.append(
-                ToolOutputAvailableEvent(tool_call_id=tool_call_id, output=output_data)
+                ToolOutputAvailableEvent(toolCallId=tool_call_id, output=output_data)
             )
 
         return self
@@ -394,7 +389,7 @@ class AIStreamBuilder:
         Returns:
             Self for method chaining
         """
-        self._events.append(ErrorEvent(error_text=error_text))
+        self._events.append(ErrorEvent(errorText=error_text))
         return self
 
     def add_event(self, event: AnyStreamEvent) -> "AIStreamBuilder":
@@ -419,7 +414,9 @@ class AIStreamBuilder:
         """
         # Auto-start if not started
         if not self._started:
-            self.start()
+            # Insert start event at beginning
+            self._events.insert(0, StartEvent(messageId=self._message_id))
+            self._started = True
 
         # Yield all events
         for event in self._events:
@@ -462,7 +459,7 @@ class TextStreamContext:
         self._builder._events.append(TextStartEvent(id=self._text_id))
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
         """Exit the context and end the text part."""
         self._builder._events.append(TextEndEvent(id=self._text_id))
 
